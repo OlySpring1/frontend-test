@@ -1,9 +1,16 @@
+import { useSelector } from "react-redux";
+import FormRegistration from "./components/FormRegistration/FormRegistration";
+import GlobalStyle from "./globalStyles";
+import { getUsers } from "./redux";
+
 const App = () => {
-    return (
-        <div className="App">
-            <h1>Hello world</h1>
-        </div>
-    );
-}
+  const users = useSelector(getUsers);
+  return (
+    <div className="App">
+      <GlobalStyle />
+      <FormRegistration />
+    </div>
+  );
+};
 
 export default App;
