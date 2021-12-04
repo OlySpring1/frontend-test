@@ -1,13 +1,23 @@
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { InputStyled, WrapperInput } from "./styles";
-
-const Input = ({ placeholder, name, type, register, validation, errors }) => {
+const Input = ({
+  placeholder,
+  name,
+  type,
+  register ,
+  validation,
+  errors,
+  onChange,
+  value,
+}) => {
   return (
     <WrapperInput>
       <InputStyled
         placeholder={placeholder}
         type={type}
         name={name}
+        onChange={onChange}
+        value={value}
         isError={!!errors?.[name]?.message}
         {...register(name, validation)}
       />

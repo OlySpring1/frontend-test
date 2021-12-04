@@ -1,27 +1,24 @@
-import { getByDisplayValue } from "@testing-library/dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { handleSuccess } from "../../redux";
 import Button from "../Button/Button";
 import CheckBox from "../CheckBox/CheckBox";
 import Input from "../Input/Input";
 import Select from "../Select/Select";
 import { Container } from "./styles";
+import AutoCompleteText from "../AutocompleteAddress/AutocompleteAddress";
 import {
   validationLastName,
   validationFirstName,
   validationPhone,
   validationEmail,
   validationAcceptTerms,
-  validationAddress,
-  validationSex,
 } from "./validations";
-
+import { setUser } from "../../redux/users";
 const FormRegistration = () => {
   const dispatch = useDispatch();
   const defaultValues = {
-    sex: "Select sex",
+    sex: "",
     acceptTerms: false,
     firstName: "",
     lastName: "",
@@ -32,25 +29,24 @@ const FormRegistration = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     watch,
     reset,
     control,
+    setValue,
     formState: { errors, isSubmitSuccessful },
-  } = useForm(defaultValues);
-  const [sex, acceptTerms] = watch(["sex", "acceptTerms"]);
+  } = useForm({ defaultValues });
+  const [acceptTerms] = watch([ "acceptTerms"]);
   useEffect(() => {
     if (isSubmitSuccessful) {
       reset(defaultValues);
     }
   }, [isSubmitSuccessful, reset]);
   const onSubmit = (data) => {
-    dispatch(handleSuccess(data));
+    dispatch(setUser(data));
   };
   const preventDefault = (e) => {
     e.preventDefault();
   };
-
   return (
     <Container onSubmit={preventDefault}>
       <Input
@@ -85,24 +81,38 @@ const FormRegistration = () => {
         validation={validationEmail}
         errors={errors}
       />
-      <Input
-        placeholder="Address"
-        register={register}
+
+      <Controller
         name="address"
-        type="text"
-        validation={validationAddress}
-        errors={errors}
+        control={control}
+        rules={{ required: "Please enter your address" }}
+        render={(props) => {
+          const {
+            field: { value, onChange,  },
+            fieldState: {error}
+          } = props;
+          return (
+            <AutoCompleteText
+              error={error}
+              text={value}
+              setValue={setValue}
+              onChange={onChange}
+            />
+          );
+        }}
       />
+
       <Controller
         name="sex"
         control={control}
-        rules={{ required: true }}
-        defaultValue='Hello'
+        rules={{ required: "Please choose your sex" }}
         render={(props) => {
           const {
             field: { value, onChange },
+            fieldState: {error}
           } = props;
-          return <Select setCurrentValue={onChange} currentValue={value} />;
+          
+          return <Select setCurrentValue={onChange} currentValue={value} error={error}/>;
         }}
       />
       <CheckBox

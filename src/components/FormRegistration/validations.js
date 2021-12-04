@@ -8,26 +8,9 @@ export const validationLastName = {
 export const validationPhone = {
   required: { value: true, message: "Please enter your phone number" },
   pattern: {
-    value: /\d/,
-    message: "Please use only numbers",
+    value: /^\d{5,12}$/,
+    message: "Please use only numbers. The phone number must contain at least 5 and more than 14 digits",
   },
-  minLength: {
-    value: 5,
-    message:
-      "The phone number must contain at least 5 and more than 14 digits.",
-  },
-  maxLength: {
-    value: 14,
-    message:
-      "The phone number must contain at least 5 and more than 14 digits.",
-  },
-};
-export const validationAddress = {
-  required: { value: true, message: "Please enter your address" },
-};
-
-export const validationSex = {
-  required: { value: true, message: "Please enter your sex" },
 };
 
 export const validationEmail = {

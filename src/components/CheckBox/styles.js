@@ -7,6 +7,7 @@ export const CheckboxWrapper = styled.div`
 export const CheckboxLabel = styled.label`
   display: flex;
   align-items: center;
+  color: ${colors.darkGrey};
 `;
 export const CheckboxContainer = styled.div`
   display: inline-block;
@@ -49,5 +50,6 @@ export const TextLabel = styled.p`
   display: inline-block;
   margin-left: 12px;
   word-wrap: break-word;
-  font-family: Roboto, sans-serif;
+  /* font-family: Roboto, sans-serif; */
+  cursor: pointer;
 `;

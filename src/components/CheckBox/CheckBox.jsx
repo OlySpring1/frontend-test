@@ -15,7 +15,6 @@ const CheckBox = ({ currentValue, register, errors, validation }) => {
       <CheckboxLabel>
         <CheckboxContainer>
           <HiddenCheckbox
-            checked={currentValue}
             {...register("acceptTerms", validation)}
           />
           <StyledCheckbox
